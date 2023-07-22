@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const { logger } = require('./middleware/logs');
 const errorHandler = require('./middleware/errorHandler');
@@ -12,6 +13,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // Built-in json middleware
 app.use(express.json());
+
+app.use(cookieParser());
 
 // Serving static files
 app.use('/', express.static(path.join(__dirname, 'public')));
