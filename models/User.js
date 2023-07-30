@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         default: 'Employee'
     }],
     active: {
-        type: boolean,
+        type: Boolean,
         default: true
     }
 });
