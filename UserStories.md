@@ -9,11 +9,11 @@
 7. [] Provide a logout option
 8. [] Require users to login at least once per week
 9. [] Provide a way to remove employee access asap if needed
-10. [] Notes are assigned to specific employees
-11. [] Notes have a ticket #, title, note body, created & updated
+10. [] Notes are assigned to specific users
+11. [] Notes have a ticket number, title, note body, created & updated
 12. [] Notes are either OPEN or COMPLETED
 13. [] Users can be employees, Managers, or Admins
-14. [] Notes can only e deleted by Managers or Admins
+14. [] Notes can only be deleted by Managers or Admins
 15. [] Anyone can create a note (when customer checks-in)
 16. [] Employees can only view and edit their assigned notes
 17. [] Managers and Admins can view, edit and delete all notes
