@@ -35,7 +35,7 @@ const createNewUser = asyncHandler(async (req, res) => {
     // Hash Password
     const hashedPwd = await bcrypt.hash(password, 10);
 
-    const userObject = { username, password: hashedPwd, roles };
+    const userObject = { username, "password": hashedPwd, roles };
 
     // Create and store new user
     const user = await User.create(userObject);
@@ -43,7 +43,7 @@ const createNewUser = asyncHandler(async (req, res) => {
     if (user) {
         res.status(201).json({ Message: `User ${username} created` });
     } else {
-        res.status(400).json({ Message: `Invalid user data` });
+        res.status(400).json({ Message: `Invalid user data received` });
     }
 
 });
@@ -55,21 +55,20 @@ const updateUser = asyncHandler(async (req, res) => {
     const { id, username, roles, active, password } = req.body;
 
     // Confirm data
-    if (!id || !username || !Array.isArray(roles) || roles.length === 0 || typeof active !== 'boolean') {
+    if (!id || !username || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
         return res.status(400).json({ Message: "All fields required" });
     }
 
     const user = await User.findById(id).exec();
 
     if (!user) {
-        return res.status(404).json({ Message: "User not found" });
+        return res.status(400).json({ Message: "User not found" });
     }
 
     // Check for Duplicate
-    const duplicate = await User.findOne({ username }).lean().exec();
-    
+    const duplicate = await User.findOne({ username }).lean().exec();    
     // Allow updates to the original user
-    if (duplicate && duplicate._id.toString() !== id) {
+    if (duplicate && duplicate?._id.toString() !== id) {
         return res.status(409).json({ Message: "Duplicate username" });
     }
 
@@ -81,7 +80,6 @@ const updateUser = asyncHandler(async (req, res) => {
         user.password = await bcrypt.hash(password, 10);
     }
 
-    // Save the updated user using await
     const updatedUser = await user.save();
 
     res.json({ Message: `${updatedUser.username} updated` });
